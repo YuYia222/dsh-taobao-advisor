@@ -618,6 +618,7 @@ window.__ModuleLoader__.load({
       const [draft, setDraft] = useState('')
       const [busy, setBusy] = useState(false)
       const [error, setError] = useState('')
+      const [punishment, setPunishment] = useState(false)
       const [needLogin, setNeedLogin] = useState(false)
       const [sort, setSort] = useState('smart')
       const [detail, setDetail] = useState({ id: '', text: '' })
@@ -693,7 +694,10 @@ window.__ModuleLoader__.load({
         try {
           const result = await rpc('search', { query })
           if (!result.ok) {
-            setError(result.reason || '搜索失败')
+            setPunishment(Boolean(result.punishment))
+            setError(result.punishment
+              ? '淘宝把这次访问判定为异常（风控拦截）。点右上「显示浏览器」，在弹出的窗口里完成滑块或验证；也可以等 10–30 分钟，或切换网络（手机热点最快）后重试。此期间请不要再连续搜索，否则会延长拦截时间。'
+              : (result.reason || '搜索失败'))
             setNeedLogin(Boolean(result.needLogin))
           } else {
             setAnalysis(result.state.analysis)
@@ -878,6 +882,14 @@ window.__ModuleLoader__.load({
             error
               ? h('div', { className: 'ta-banner err' },
                 h('div', { className: 'ta-grow' }, error),
+                punishment
+                  ? h('button', {
+                    className: 'ta-btn sm',
+                    onClick: () => rpc('showBrowser', { visible: true })
+                      .then(() => setCdpVisible(true))
+                      .catch(() => {}),
+                  }, t.showBrowser)
+                  : null,
                 h('button', { className: 'ta-btn sm quiet', onClick: () => search(draft) }, t.retry))
               : null,
 

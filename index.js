@@ -153,6 +153,7 @@ export async function apply(ctx) {
         return {
           ok: false,
           needLogin: Boolean(found.needLogin),
+          punishment: Boolean(found.punishment),
           reason: found.reason || '没有拿到搜索结果',
           detail: found.info,
         }
