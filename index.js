@@ -490,6 +490,13 @@ export async function apply(ctx) {
       kind: 'prefix',
       path: ROUTE_PATH,
       handler: async (req, res) => {
+        // Loopback only: this route has no auth of its own, so a LAN or tunneled
+        // caller must never reach it even if the GUI is exposed.
+        const remote = String(req.socket?.remoteAddress || '')
+        if (remote && !/^(::1|::ffff:127\.|127\.)/.test(remote)) {
+          res.writeHead(403, { 'content-type': 'text/plain; charset=utf-8' })
+          return res.end('forbidden: loopback only')
+        }
         const send = (value, status = 200) => {
           res.writeHead(status, {
             'content-type': 'application/json; charset=utf-8',

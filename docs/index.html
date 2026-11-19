@@ -4,57 +4,47 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>淘宝选型助手 · DSH 插件</title>
-<meta name="description" content="给 DeepSeek Harness 桌面版的淘宝比价插件：报型号，自动出链接、比价、导 Excel。" />
+<meta name="description" content="给 DeepSeek Harness 桌面版的淘宝比价插件：报型号，自动出链接、比价、导 Excel。无服务器、无遥测。" />
 <style>
-  :root {
-    --bg: #0f1115; --card: #171a21; --line: #262b35;
-    --fg: #e8eaee; --muted: #9aa3b2; --accent: #ff5a1f;
-  }
+  :root { --bg:#0f1115; --card:#171a21; --line:#262b35; --fg:#e8eaee; --muted:#9aa3b2; --accent:#ff5a1f; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg);
-    font: 15px/1.7 "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.7 "Segoe UI","Microsoft YaHei",system-ui,sans-serif; }
   a { color: var(--accent); }
-  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px; }
-  header { padding: 56px 0 32px; }
-  .badge { display: inline-block; padding: 2px 10px; border: 1px solid var(--line);
-    border-radius: 999px; font-size: 12px; color: var(--muted); }
-  h1 { font-size: 34px; line-height: 1.25; margin: 16px 0 10px; letter-spacing: .5px; }
-  .lead { color: var(--muted); font-size: 16px; margin: 0 0 24px; }
-  .actions { display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px;
-    border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--fg);
-    text-decoration: none; font-size: 14px; }
-  .btn:hover { border-color: #3a4150; }
-  .btn.primary { background: var(--accent); border-color: transparent; color: #fff; font-weight: 600; }
-  .btn.primary:hover { filter: brightness(1.08); }
-  section { padding: 34px 0; border-top: 1px solid var(--line); }
-  h2 { font-size: 20px; margin: 0 0 18px; }
-  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
-  .card h3 { font-size: 14px; margin: 0 0 6px; }
-  .card p { margin: 0; color: var(--muted); font-size: 13.5px; }
-  ol, ul { margin: 0; padding-left: 22px; }
-  li { margin: 6px 0; color: var(--muted); }
-  li b, p b { color: var(--fg); }
-  code, pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 13px; }
-  code { background: #12151b; border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; color: #d7dbe3; }
-  pre { background: #12151b; border: 1px solid var(--line); border-radius: 10px;
-    padding: 14px 16px; overflow: auto; color: #d7dbe3; }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
-  th { color: var(--muted); font-weight: 600; }
-  img.shot { width: 100%; border-radius: 12px; border: 1px solid var(--line); display: block; }
-  footer { color: var(--muted); font-size: 13px; padding: 30px 0 50px; }
-  .note { color: var(--muted); font-size: 12.5px; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 56px 0 30px; }
+  .badge { display:inline-block; padding:2px 10px; border:1px solid var(--line); border-radius:999px; font-size:12px; color:var(--muted); }
+  h1 { font-size:34px; line-height:1.25; margin:16px 0 10px; letter-spacing:.5px; }
+  .lead { color:var(--muted); font-size:16px; margin:0 0 22px; }
+  .actions { display:flex; gap:12px; flex-wrap:wrap; }
+  .btn { display:inline-flex; align-items:center; gap:8px; height:42px; padding:0 20px; border-radius:10px;
+    border:1px solid var(--line); background:var(--card); color:var(--fg); text-decoration:none; font-size:14px; }
+  .btn:hover { border-color:#3a4150; }
+  .btn.primary { background:var(--accent); border-color:transparent; color:#fff; font-weight:600; }
+  .btn.primary:hover { filter:brightness(1.08); }
+  section { padding:32px 0; border-top:1px solid var(--line); }
+  h2 { font-size:20px; margin:0 0 16px; }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  ol, ul { margin:0; padding-left:22px; }
+  li { margin:6px 0; color:var(--muted); }
+  li b, p b { color:var(--fg); }
+  code, pre { font-family:Consolas,"Cascadia Mono",monospace; font-size:13px; }
+  code { background:#12151b; border:1px solid var(--line); border-radius:5px; padding:1px 6px; color:#d7dbe3; }
+  pre { background:#12151b; border:1px solid var(--line); border-radius:10px; padding:14px 16px; overflow:auto; color:#d7dbe3; }
+  .note { color:var(--muted); font-size:12.5px; }
+  .warn { border-left:3px solid var(--accent); padding:10px 14px; background:var(--card);
+    border:1px solid var(--line); border-left-width:3px; border-radius:8px; font-size:13.5px; }
+  footer { color:var(--muted); font-size:13px; padding:30px 0 50px; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header>
-    <span class="badge">DeepSeek Harness · 桌面版插件</span>
+    <span class="badge">DeepSeek Harness · 桌面版插件 · Beta</span>
     <h1>淘宝选型助手</h1>
-    <p class="lead">报一个型号，自动给出链接、价格、性价比与性能排序；支持品牌 + 规格筛选、多项批量比价并导出 Excel。登录一次淘宝即可，账号数据只留在你自己的电脑上。</p>
+    <p class="lead">报一个型号，自动给出链接、价格、性价比与性能排序；支持品牌 + 规格筛选。登录一次淘宝即可，<b>没有服务器、没有遥测，数据不离开你的电脑</b>。</p>
     <div class="actions">
       <a class="btn primary" id="download" href="#">下载 ZIP</a>
       <a class="btn" id="source" href="#">查看源码</a>
@@ -63,21 +53,18 @@
   </header>
 
   <section>
-    <h2>能做什么</h2>
-    <div class="grid">
-      <div class="card"><h3>单品比价</h3><p>输入型号，给出「最便宜 / 性价比最高 / 性能最强」三组推荐与全部候选链接。</p></div>
-      <div class="card"><h3>品牌 + 规格筛选</h3><p>自动识别品牌（正泰、施耐德、Apple…）与规格（极数 3P、电流 C32、功率 7.5KW、容量 256G），可叠加。</p></div>
-      <div class="card"><h3>批量比价 + Excel</h3><p>上传模板表格，一行一件商品，导出含「汇总 / 全部链接」两张表的结果。</p></div>
-      <div class="card"><h3>后台运行</h3><p>默认无头浏览器，屏幕不弹窗；需要过滑块时一键切到可见窗口。</p></div>
-      <div class="card"><h3>三种登录</h3><p>扫码（二维码直接显示在面板里）、短信验证码、账号密码。</p></div>
-      <div class="card"><h3>代问客服</h3><p>自动生成问价话术，确认后打开客服窗口发送（实验能力）。</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>界面</h2>
-    <img class="shot" src="screenshots/sidebar.png" alt="侧边栏入口" />
-    <p class="note">安装后出现在左侧栏；面板内含登录、比价、批量比价三个区域。</p>
+    <h2>功能</h2>
+    <table>
+      <tr><th>功能</th><th>状态</th></tr>
+      <tr><td>单品比价：最便宜 / 性价比最高 / 性能最强 + 全部候选链接</td><td>可用</td></tr>
+      <tr><td>品牌筛选（自动识别 30+ 品牌）</td><td>可用</td></tr>
+      <tr><td>规格筛选（极数 3P、电流 C32、功率 7.5KW、容量 256G），可与品牌叠加</td><td>可用</td></tr>
+      <tr><td>三种登录：面板内扫码 / 短信验证码 / 账号密码</td><td>可用</td></tr>
+      <tr><td>后台运行（无头浏览器），需要过滑块时可切到可见窗口</td><td>可用</td></tr>
+      <tr><td>代问客服：生成问价话术并发送</td><td>实验能力</td></tr>
+      <tr><td>批量比价 + 导出 Excel</td><td><b>测试中，未充分验证</b></td></tr>
+    </table>
+    <p class="warn" style="margin-top:14px">批量比价仍处测试阶段：按行串行搜索、依赖页面结构解析，尚未覆盖多种品类与较大行数。请先用 2–3 行试跑，确认导出的表格无误后再正式使用。</p>
   </section>
 
   <section id="install">
@@ -89,14 +76,24 @@
   </section>
 
   <section>
-    <h2>隐私</h2>
-    <table>
-      <tr><th>数据</th><th>位置</th><th>随插件分发</th></tr>
-      <tr><td>登录态 / cookie</td><td><code>%LOCALAPPDATA%\dsh-taobao-advisor\browser</code></td><td>否</td></tr>
-      <tr><td>导出的 Excel</td><td><code>%LOCALAPPDATA%\dsh-taobao-advisor\exports</code></td><td>否</td></tr>
-      <tr><td>当前型号 / 结果 / 账号名</td><td>进程内存</td><td>否</td></tr>
-      <tr><td>密码</td><td>仅填入本机浏览器表单</td><td>否</td></tr>
-    </table>
+    <h2>你的数据会不会被传走？</h2>
+    <p><b>不会。</b>这个插件没有作者服务器、没有遥测，也不会把你的任何数据回传给作者。</p>
+    <ul>
+      <li><b>没有后端</b>：逻辑全在你本机（DSH 宿主进程 + 你的浏览器），作者没有接收端。</li>
+      <li><b>没有账号体系</b>：不收集邮箱、机器码、使用统计，没有激活 / 上报 / 心跳。</li>
+      <li><b>出网只有两类</b>：访问 <code>taobao.com</code> / <code>tmall.com</code> 的正常页面请求；商品图片经本机代理转发（只允许 <code>*.alicdn.com</code>、<code>*.taobao.com</code>、<code>*.tmall.com</code>），图片仍来自淘宝。</li>
+      <li><b>面板接口只监听本机</b>：路由绑定 <code>127.0.0.1</code>，并校验来源必须是回环地址，非本机请求直接 403。</li>
+      <li><b>数据只落在本机</b>：登录态在浏览器配置目录，导出的 Excel 在本地目录，密码只填入浏览器表单、不写盘。</li>
+      <li><b>可自行审计</b>：代码全在本仓库，搜 <code>fetch(</code> 即可看到所有出网位置。</li>
+    </ul>
+    <p class="note">如果你在 DSH 里主动开启了远程访问 / 局域网共享，那是 DSH 自身的能力，与插件无关。</p>
+  </section>
+
+  <section>
+    <h2>如何更新</h2>
+    <p>重新执行安装命令即可拉取最新版本，然后重启 DSH：</p>
+    <pre id="updatecmd">dsh plugin --profile desktop install git+https://github.com/YuYia222/dsh-taobao-advisor.git</pre>
+    <p class="note">想固定版本就用标签安装（如 <code>#v0.1.0-beta.1</code>），不会被后续更新影响。更新不影响淘宝登录态。</p>
   </section>
 
   <section>
@@ -104,8 +101,8 @@
     <ul>
       <li>仅在 Windows + Edge/Chrome 上验证过。</li>
       <li>列表价是<b>最低 SKU 起价</b>，多规格商品请以商品页所选规格的实价为准。</li>
-      <li>淘宝改版可能让抓取规则失效，需要更新 <code>lib/taobao.js</code>。</li>
-      <li>型号匹配是启发式的，「全部链接」表保留原始候选供人工复核。</li>
+      <li>型号匹配为启发式规则，「全部链接」表保留原始候选供人工复核。</li>
+      <li>批量比价单次最多 30 行，逐条串行；功能仍在测试。</li>
     </ul>
   </section>
 
@@ -120,12 +117,14 @@
     var host = location.hostname || '';
     var parts = location.pathname.split('/').filter(Boolean);
     var onPages = host.endsWith('.github.io');
-    var owner = onPages ? host.slice(0, -'.github.io'.length) : 'YuYia222';
-    var repo = onPages ? (parts[0] || 'dsh-taobao-advisor') : 'dsh-taobao-advisor';
+    var owner = onPages ? host.slice(0, -'.github.io'.length) : '__OWNER__';
+    var repo = onPages ? (parts[0] || '__REPO__') : '__REPO__';
     var base = 'https://github.com/' + owner + '/' + repo;
     document.getElementById('download').href = base + '/archive/refs/heads/main.zip';
     document.getElementById('source').href = base;
     document.getElementById('installcmd').textContent =
+      'dsh plugin --profile desktop install git+' + base + '.git';
+    document.getElementById('updatecmd').textContent =
       'dsh plugin --profile desktop install git+' + base + '.git';
   })();
 </script>

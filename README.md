@@ -2,11 +2,9 @@
 
 给 [DeepSeek Harness](https://github.com/) 桌面版用的侧边栏插件：**登录一次淘宝，报型号，自动比价、挑链接、导出 Excel**。
 
-> 仅供学习与个人购物比价使用。插件不包含任何账号数据，登录态只保存在你自己的电脑上。
-
 **当前版本：`0.1.0-beta.1`（首个公开测试版）** · [更新日志](CHANGELOG.md)
 
-![侧边栏入口](docs/screenshots/sidebar.png)
+> 仅供学习与个人购物比价使用，请遵守淘宝平台协议。
 
 ## 一条命令安装
 
@@ -18,98 +16,86 @@ dsh plugin --profile desktop install git+https://github.com/YuYia222/dsh-taobao-
 dsh plugin --profile desktop install git+https://github.com/YuYia222/dsh-taobao-advisor.git#v0.1.0-beta.1
 ```
 
-装好后重启 Harness，左侧栏出现「淘宝选型助手」。
-
 卸载：
 
 ```bash
 dsh plugin --profile desktop remove @local/dsh-taobao-advisor
 ```
 
-> 需要本机有 `git`。命令里的 `<你的 profile>` 通常是 `desktop`。
-> 也可以在 DSH 的「插件」页里点「安装插件」，填 `git+https://github.com/YuYia222/dsh-taobao-advisor.git`。
-
 ## 它做什么
 
-- **单品比价**：输入型号（`iPhone 17 Pro 256G`、`小米15`、`微型断路器 3P`），给出「最便宜 / 性价比最高 / 性能最强」三组推荐 + 全部候选链接。
-- **品牌 + 规格两级筛选**：自动识别品牌（正泰、施耐德、Apple、华为…30+）与规格（极数 `3P`、电流 `C32`、功率 `7.5KW`、容量 `256G`），可叠加。
-- **批量比价 + Excel**：下载模板 → 一行一件商品 → 上传 → 逐条比价 → 导出含「汇总 / 全部链接」两张表的 xlsx。
-- **代问客服**：自动生成问价话术，确认后由插件打开客服窗口发送（实验能力）。
-- **后台运行**：默认无头浏览器，屏幕上不弹窗；需要人工过滑块时点「显示浏览器」。
-- **扫码 / 短信 / 密码** 三种登录方式，二维码直接显示在面板里。
+| 功能 | 状态 |
+|---|---|
+| **单品比价**：输入型号，给出「最便宜 / 性价比最高 / 性能最强」三组推荐 + 全部候选链接 | 可用 |
+| **品牌筛选**：自动识别 30+ 品牌（正泰、施耐德、Apple、华为…） | 可用 |
+| **规格筛选**：极数 `3P`、电流 `C32`、功率 `7.5KW`、容量 `256G`，可与品牌叠加 | 可用 |
+| **三种登录**：面板内扫码、短信验证码、账号密码 | 可用 |
+| **后台运行**：默认无头浏览器，需要人工过滑块时可切到可见窗口 | 可用 |
+| **代问客服**：生成问价话术并发送 | 实验能力，可能失效 |
+| **批量比价 + Excel**：上传模板 → 逐条比价 → 导出「汇总 / 全部链接」两张表 | **测试中，尚未经过充分使用验证** |
 
-![淘宝登录页](docs/screenshots/login-gate.png)
+> ⚠️ **批量比价仍处测试阶段**：它按行串行搜索，字段解析依赖淘宝页面结构，尚未在多种品类、多行数量下验证过。请先用 2–3 行小批量试跑，确认导出的 Excel 符合预期后再用于正式比价。
 
 ## 其他安装方式
 
-**手动安装（不用命令行）**
-
-1. 点右侧 **Code → Download ZIP**；
-2. 解压，得到含 `package.json` 的目录；
-3. DSH → 左侧「插件」→ 安装插件 → 选择该目录。
-
-**发布到 registry 后**（见 [PUBLISH.md](PUBLISH.md)）
-
-```bash
-dsh plugin --profile <你的 profile> install @你的scope/taobao-advisor
-```
+不用命令行的话：点 **Code → Download ZIP** 解压，DSH → 左侧「插件」→ 安装插件 → 选择解压出的目录（里面有 `package.json`）。
 
 ## 首次使用
 
 1. 左侧栏点「淘宝选型助手」。
-2. 面板左侧就是实时二维码，手机淘宝扫一扫即可；也可以切到短信 / 密码登录。
-3. 登录态保存在 `%LOCALAPPDATA%\dsh-taobao-advisor\browser`，**不经过任何服务器**。
-4. 输入型号开始比价；「批量比价」页签可以传 Excel。
+2. 面板左侧是实时二维码，手机淘宝扫一扫；也可切到短信 / 密码登录。
+3. 输入型号开始比价。
 
-## 隐私
+## 我的数据会不会被传走？
 
-| 数据 | 位置 | 是否随插件分发 |
-|---|---|---|
-| 登录态 / cookie | `%LOCALAPPDATA%\dsh-taobao-advisor\browser` | 否 |
-| 导出的 Excel | `%LOCALAPPDATA%\dsh-taobao-advisor\exports` | 否 |
-| 当前型号 / 结果 / 账号名 | 进程内存 | 否（从不落盘） |
-| 密码 | 只填入本机浏览器表单 | 否 |
+**不会。这个插件没有作者服务器，没有遥测，也不会把你的任何数据回传给作者。**
 
-插件包内只有代码。
+具体说清楚：
+
+- **没有后端**。插件全部逻辑跑在你自己的电脑上（DSH 宿主进程 + 你本机的浏览器）。作者没有部署任何接收端，也无从接收。
+- **没有账号体系**。插件不收集邮箱、机器码、使用统计；没有"激活"、"上报"、"心跳"这种东西。
+- **网络请求只有两类**，都指向淘宝自己：
+  1. 你的浏览器访问 `taobao.com` / `tmall.com` 页面的正常请求；
+  2. 商品图片经本机代理转发（只允许 `*.alicdn.com` / `*.taobao.com` / `*.tmall.com`，用于绕开防盗链），图片本身仍然来自淘宝。
+- **面板接口只监听本机**。插件注册的 HTTP 路由在 `127.0.0.1`，并且额外校验请求来源必须是回环地址（非本机请求直接 403）。
+- **数据只落在你本机**：
+
+| 数据 | 存在哪 |
+|---|---|
+| 登录态 / cookie | 你本机的浏览器配置目录 `%LOCALAPPDATA%\dsh-taobao-advisor\browser` |
+| 导出的 Excel | `%LOCALAPPDATA%\dsh-taobao-advisor\exports` |
+| 当前型号 / 结果 / 账号名 | 进程内存，退出即消失 |
+| 密码 | 只填入本机浏览器表单，不写磁盘、不发网络 |
+
+- **可以自己验证**：全部代码就在这个仓库里（`index.js`、`client.js`、`lib/*.js`），搜一下 `fetch(`、`http`、`XMLHttpRequest` 就能看到全部出网位置。
+
+> 提醒：如果你在 DSH 里主动开启了「远程访问 / 局域网共享」，那是 DSH 自身的能力，与插件无关；插件接口本身只接受本机来源。
 
 ## 已知限制
 
-- **仅 Windows 验证过**：浏览器路径按 Edge/Chrome 默认安装位置查找，数据目录用 `%LOCALAPPDATA%`。
-- 淘宝改版可能导致抓取规则失效，需要更新 `lib/taobao.js`。
-- 列表页显示的是**最低 SKU 起价**，多规格商品（`1P2P3P4P`）要以商品页所选规格的实价为准。
-- 型号匹配是启发式的，`全部链接` 表保留原始候选供人工复核。
-- 单次批量最多 30 行，逐条串行（防风控）。
+- 目前仅在 **Windows + Edge/Chrome** 上验证过。
+- 列表页显示的是**最低 SKU 起价**，多规格商品（如 `1P2P3P4P`）要以商品页所选规格的实价为准。
+- 型号匹配是启发式规则，`全部链接` 表保留原始候选供人工复核。
+- 批量比价单次最多 30 行，逐条串行执行以避免触发风控；该功能仍处测试阶段（见上）。
+- 淘宝改版可能导致抓取规则失效，需要等更新。
 
-## 目录结构
+## 如何更新
 
-这个仓库根目录**就是插件包**（所以可以直接用 `git+https://` 安装）：
+**一条命令**（会拉取 main 上的最新提交）：
 
-```
-package.json          插件清单（dsh.bundle + dsh.client）
-cordis.patch.yml      装载补丁
-index.js              宿主：面板接口、agent 工具、批量、Excel
-client.js             面板 UI（预构建，纯 JS 无需打包）
-lib/cdp.js            无依赖 CDP 客户端（Node 内置 WebSocket）
-lib/taobao.js         登录 / 搜索 / 详情 / 客服
-lib/analyze.js        型号匹配、品牌与规格抽取、三指标打分
-lib/xlsx.js           xlsx 读写（零依赖，zip + XML）
-locale/{zh,en}.json   显示名与描述
-icon.svg              图标
-docs/                 GitHub Pages 落地页
+```bash
+dsh plugin --profile desktop install git+https://github.com/YuYia222/dsh-taobao-advisor.git
 ```
 
-## 开发
+安装后**重启 DSH**，左侧栏即是最新版本。
 
-- 面板代码是普通 JS，改完在面板顶栏点「刷新界面」即可生效（桌面版 Ctrl+R 无效）。
-- 改宿主代码需要在「插件」页把插件关掉再打开一次。
-- **版本号只有一个来源**：`package.json` 的 `version`。宿主启动时读它作为 build id；面板里的 `buildTag` 是同一串字符，用于发现「页面还在跑旧代码」并提示刷新。
-- 发版清单：
-  1. 改 `package.json` 的 `version`；
-  2. 把 `client.js` 里的 `buildTag` 改成同一串（只有这一处需要手动同步）；
-  3. 在 `CHANGELOG.md` 加一节；
-  4. `git tag -a v<版本> -m "..." && git push --tags`；
-  5. `gh release create v<版本> --prerelease --notes-file <说明>`。
-- 发布到 npm 前用 `npm pack --dry-run` 确认 `files` 白名单没漏文件（客户端预构建产物必须原样带上）。
+想固定版本就装某个标签（例如 `#v0.1.0-beta.1`），不会被后续改动影响；想跟最新就装 main。
+
+> 更新不会影响你的淘宝登录态——登录信息存在浏览器配置目录里，与插件代码分开。
+
+## 问题反馈
+
+在仓库的 [Issues](https://github.com/YuYia222/dsh-taobao-advisor/issues) 里贴：型号、预期结果、实际结果（截图更好）。**不要贴账号、cookie 或任何登录凭据。**
 
 ## License
 
