@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-taobao-advisor",
-  "version": "1.0.0",
+  "version": "0.1.0-beta.1",
   "private": true,
   "type": "module",
   "description": "Sidebar Taobao picker: sign in once, name a model, compare price, value and performance, and ask sellers for you.",

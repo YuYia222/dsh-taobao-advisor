@@ -4,12 +4,18 @@
 
 > 仅供学习与个人购物比价使用。插件不包含任何账号数据，登录态只保存在你自己的电脑上。
 
+**当前版本：`0.1.0-beta.1`（首个公开测试版）** · [更新日志](CHANGELOG.md)
+
 ![侧边栏入口](docs/screenshots/sidebar.png)
 
 ## 一条命令安装
 
 ```bash
-dsh plugin --profile <你的 profile> install git+https://github.com/YuYia222/dsh-taobao-advisor.git
+# 最新测试版（跟随 main 分支）
+dsh plugin --profile desktop install git+https://github.com/YuYia222/dsh-taobao-advisor.git
+
+# 或锁定到某个测试版标签
+dsh plugin --profile desktop install git+https://github.com/YuYia222/dsh-taobao-advisor.git#v0.1.0-beta.1
 ```
 
 装好后重启 Harness，左侧栏出现「淘宝选型助手」。
@@ -17,7 +23,7 @@ dsh plugin --profile <你的 profile> install git+https://github.com/YuYia222/ds
 卸载：
 
 ```bash
-dsh plugin --profile <你的 profile> remove @local/dsh-taobao-advisor
+dsh plugin --profile desktop remove @local/dsh-taobao-advisor
 ```
 
 > 需要本机有 `git`。命令里的 `<你的 profile>` 通常是 `desktop`。
