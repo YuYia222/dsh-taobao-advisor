@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Taobao picker">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#FF5A1F"/>
+  <path d="M16 24h32l-3.2 23.2a4 4 0 0 1-4 3.5H23.2a4 4 0 0 1-4-3.5L16 24Z" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M24.5 24a7.5 7.5 0 0 1 15 0" fill="none" stroke="#FFFFFF" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M25 38.5l5 5 10-10.5" fill="none" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

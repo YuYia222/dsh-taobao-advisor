@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build / test output
+*.log
+*.tgz
+dist/
+
+# local runtime data (never commit account or browser state)
+browser/
+exports/
+*.xlsx
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

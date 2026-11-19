@@ -1,0 +1,3 @@
+- insert:
+    - id: taobao-advisor
+      name: '@local/dsh-taobao-advisor'
