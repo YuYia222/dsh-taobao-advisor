@@ -27,11 +27,18 @@ export const inject = ['tools']
 const ROUTE_PATH = '/api/taobao-advisor'
 
 /**
- * Bumped together with the client half. The panel compares its own copy with
- * this one: when they differ the page is running a stale bundle and offers a
- * reload, because the desktop shell has no "Reload Page" menu.
+ * Single source of truth for the build id: the package version. The panel
+ * compares its own copy with this one, so a page running a stale bundle offers
+ * a reload (the desktop shell has no "Reload Page" menu).
  */
-const BUILD = 'v19'
+const BUILD = (() => {
+  try {
+    const manifest = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
+    return String(manifest.version || '0.0.0')
+  } catch {
+    return '0.0.0'
+  }
+})()
 
 function json(value, status = 200) {
   return new Response(JSON.stringify(value), {

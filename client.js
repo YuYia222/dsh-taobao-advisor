@@ -98,7 +98,7 @@ window.__ModuleLoader__.load({
       showBrowser: en ? 'Show browser' : '显示浏览器',
       hideBrowser: en ? 'Run hidden' : '后台运行',
       reloadUi: en ? 'Reload UI' : '刷新界面',
-      buildTag: 'v19',
+      buildTag: '0.1.0-beta.1', // keep in sync with package.json version
       outdated: en ? 'A newer build of this panel is available.' : '插件界面已更新，当前页面还在跑旧版本。',      reloadNow: en ? 'Reload now' : '立即刷新',
     }
 

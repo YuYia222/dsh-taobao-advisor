@@ -101,8 +101,15 @@ docs/                 GitHub Pages 落地页
 ## 开发
 
 - 面板代码是普通 JS，改完在面板顶栏点「刷新界面」即可生效（桌面版 Ctrl+R 无效）。
-- 改宿主代码需要在「插件」页把插件关掉再打开一次；`index.js` 的 `BUILD` 与 `client.js` 的 `buildTag` 要一起改，否则面板会提示版本不一致。
-- 发布前用 `npm pack --dry-run` 确认 `files` 白名单没漏文件（客户端预构建产物必须原样带上）。
+- 改宿主代码需要在「插件」页把插件关掉再打开一次。
+- **版本号只有一个来源**：`package.json` 的 `version`。宿主启动时读它作为 build id；面板里的 `buildTag` 是同一串字符，用于发现「页面还在跑旧代码」并提示刷新。
+- 发版清单：
+  1. 改 `package.json` 的 `version`；
+  2. 把 `client.js` 里的 `buildTag` 改成同一串（只有这一处需要手动同步）；
+  3. 在 `CHANGELOG.md` 加一节；
+  4. `git tag -a v<版本> -m "..." && git push --tags`；
+  5. `gh release create v<版本> --prerelease --notes-file <说明>`。
+- 发布到 npm 前用 `npm pack --dry-run` 确认 `files` 白名单没漏文件（客户端预构建产物必须原样带上）。
 
 ## License
 
